@@ -782,15 +782,15 @@ textarea.form__input {
 }
 
 .project_1::before {
-  background: #7D3344;
+  background: #7d3344;
 }
 
 .project_2::before {
-  background: #809A15;
+  background: #809a15;
 }
 
 .project_3::before {
-  background: #182C58;
+  background: #182c58;
 }
 
 .project__top {
@@ -1171,6 +1171,12 @@ textarea.form__input {
   padding: 0 0 0 365px;
 }
 
+.gallery__body {
+  max-width: 1460px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
 .main-slider {
   max-width: 100%;
   position: relative;
@@ -1502,15 +1508,15 @@ textarea.form__input {
   }
 
   .project__title_1 p {
-    color: #7D3344;
+    color: #7d3344;
   }
 
   .project__title_2 p {
-    color: #809A15;
+    color: #809a15;
   }
 
   .project__title_3 p {
-    color: #182C58;
+    color: #182c58;
   }
 
   .project__video {
