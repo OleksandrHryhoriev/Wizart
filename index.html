@@ -895,6 +895,33 @@
             </div>
          </footer>
       </div>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js?_v=20230315225732"></script>
+	   <script>
+		function youTubes_makeDynamic() {
+			var $ytIframes = $('iframe[src*="youtube.com"]');
+			$ytIframes.each(function(i, e) {
+				var $ytFrame = $(e);
+				var ytKey;
+				var tmp = $ytFrame.attr("src").split(/\//);
+				tmp = tmp[tmp.length - 1];
+				tmp = tmp.split("?");
+				ytKey = tmp[0];
+				var $ytLoader = $('<div class="ytLoader">');
+				$ytLoader.append($('<img class="cover" src="https://i.ytimg.com/vi/' + ytKey + '/hqdefault.jpg">'));
+				$ytLoader.append($('<picture><source srcset="img/play_button.webp" type="image/webp"><img class="playBtn" src="img/play_button.png"></picture>'));
+				$ytLoader.data("$ytFrame", $ytFrame);
+				$ytFrame.replaceWith($ytLoader);
+				$ytLoader.click(function() {
+					var $ytFrame = $ytLoader.data("$ytFrame");
+					$ytFrame.attr("src", $ytFrame.attr("src") + "?autoplay=1");
+					$ytLoader.replaceWith($ytFrame);
+				});
+			});
+		}
+		$(document).ready(function() {
+			youTubes_makeDynamic();
+		});
+	   </script>
       <script src="js/app.min.js?_v=20230315213936"></script>
    </body>
 </html>
