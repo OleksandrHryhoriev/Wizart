@@ -1,5 +1,18 @@
 (() => {
     "use strict";
+    function isWebp() {
+        function testWebP(callback) {
+            let webP = new Image;
+            webP.onload = webP.onerror = function() {
+                callback(2 == webP.height);
+            };
+            webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
+        }
+        testWebP((function(support) {
+            let className = true === support ? "webp" : "no-webp";
+            document.documentElement.classList.add(className);
+        }));
+    }
     let bodyLockStatus = true;
     let bodyLockToggle = (delay = 500) => {
         if (document.documentElement.classList.contains("lock")) bodyUnlock(delay); else bodyLock(delay);
@@ -6321,11 +6334,13 @@
         spaceBetween: 10,
         slidesPerView: 4,
         freeMode: true,
+        lazy: true,
         watchSlidesProgress: true
     });
     new core(".slider", {
         loop: true,
         spaceBetween: 60,
+        lazy: true,
         navigation: {
             nextEl: ".swiper-button-next",
             prevEl: ".swiper-button-prev"
@@ -6355,6 +6370,7 @@
         this.parentNode.classList.toggle("stage__active");
     }
     const lazyImages = document.querySelectorAll(".lazy-loading");
+    const lazyImagesWebp = document.querySelectorAll(".lazy-loadingWebp");
     const options = {
         root: null,
         rootMargin: "0px",
@@ -6365,13 +6381,26 @@
             if (imagesItem.intersectionRatio > 0) loadImage(imagesItem.target);
         }));
     }
+    function handleImgWebp(images, observer) {
+        images.forEach((imagesItem => {
+            if (imagesItem.intersectionRatio > 0) loadImageWebp(imagesItem.target);
+        }));
+    }
     function loadImage(image) {
         image.src = image.getAttribute("data-src");
     }
+    function loadImageWebp(image) {
+        image.srcset = image.getAttribute("data-srcset");
+    }
     const imageObserver = new IntersectionObserver(handleImg, options);
+    const imageWebpObserver = new IntersectionObserver(handleImgWebp, options);
     lazyImages.forEach((img => {
         imageObserver.observe(img);
     }));
+    lazyImagesWebp.forEach((img => {
+        imageWebpObserver.observe(img);
+    }));
     window["FLS"] = true;
+    isWebp();
     menuInit();
 })();
